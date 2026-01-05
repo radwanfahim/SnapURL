@@ -1,9 +1,9 @@
-import SignIn from "./components/Auth/SignIn";
+import Auth from "./components/Auth/Auth";
 
 export default function Home() {
   return (
     <main>
-      <SignIn />
+      <Auth />
     </main>
   );
 }
