@@ -1,4 +1,4 @@
-import Form from "@/app/ui/Form";
+import Form from "@/app/components/Auth/AuthForm";
 
 const AuthCard = () => {
   return (

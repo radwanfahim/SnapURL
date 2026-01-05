@@ -1,9 +1,29 @@
 "use client";
 
+import Button from "@/app/ui/Button";
+import Input from "@/app/ui/Input";
 import { useState } from "react";
 
 const Form = () => {
   const [isNewUser, setNewUser] = useState(false);
+
+  const customClass = "w-full px-3 py-2 ring ring-gray-600 mt-1 ";
+
+  // input data
+  const inputData = [
+    {
+      label: "Email Address",
+      name: "email",
+      type: "email",
+      placeholder: "User@mail.com",
+    },
+    {
+      label: "Password",
+      name: "password",
+      type: "text",
+      placeholder: "••••••••",
+    },
+  ];
 
   // form submit handler
   const handleSubmit = (e: React.FormEvent) => {
@@ -18,34 +38,27 @@ const Form = () => {
       alert("Passwords do not match");
       return;
     }
+
+    console.log(email, password);
   };
 
   return (
     <div className="mt-4 w-75">
       <form onSubmit={handleSubmit}>
         <fieldset>
-          {/* email */}
+          {/* email pass fields */}
           <div>
-            <legend className="text-sm text-gray-500">Email Address</legend>
-            <input
-              className="ring ring-gray-600 px-3 py-2 rounded-md w-full mt-1 focus:outline-none focus:ring-fuchsia-600"
-              name="email"
-              type="email"
-              placeholder="User@mail.com"
-              required
-            />
-          </div>
-
-          {/* password */}
-          <div className="mt-4  ">
-            <legend className="text-sm text-gray-500">Password</legend>
-            <input
-              className="ring ring-gray-600 px-3 py-2 rounded-md w-full mt-1 focus:outline-none focus:ring-fuchsia-600"
-              name="password"
-              type="text"
-              placeholder="••••••••"
-              required
-            />
+            {inputData.map((input, index) => (
+              <div key={index} className={index !== 0 ? "mt-4" : ""}>
+                <legend className="text-sm text-gray-500">{input.label}</legend>
+                <Input
+                  text={input.placeholder}
+                  type={input.type}
+                  name={input.name}
+                  customClass={customClass}
+                />
+              </div>
+            ))}
           </div>
 
           {/* confirm password */}
@@ -54,20 +67,22 @@ const Form = () => {
               <legend className="text-sm text-gray-500">
                 Confirm Password
               </legend>
-              <input
-                className="ring ring-gray-600 px-3 py-2 rounded-md w-full mt-1 focus:outline-none focus:ring-fuchsia-600"
-                name="confirmPassword"
-                type="text"
-                placeholder="••••••••"
-                required
+              <Input
+                text={"••••••••"}
+                type={"text"}
+                name={"confirmPassword"}
+                customClass={customClass}
               />
             </div>
           )}
 
           {/* form btn */}
-          <button className="mt-4 bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-medium py-2 px-4 rounded-md w-full transition-colors">
-            {isNewUser ? "Sign Up" : "Sign In"}
-          </button>
+          <Button
+            isNewUser={isNewUser ? "Sign Up" : "Sign In"}
+            icon={""}
+            text={""}
+            customClass="py-2 px-4 mt-4 w-full"
+          />
         </fieldset>
       </form>
 
