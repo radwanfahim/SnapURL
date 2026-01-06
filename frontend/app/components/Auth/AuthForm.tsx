@@ -1,10 +1,14 @@
 "use client";
 
+import { supabase } from "@/app/lib/supabase";
 import Button from "@/app/ui/Button";
 import Input from "@/app/ui/Input";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Form = () => {
+  const router = useRouter();
   const [isNewUser, setNewUser] = useState(false);
 
   const customClass = "w-full px-3 py-2 ring ring-gray-600 mt-1 ";
@@ -26,8 +30,9 @@ const Form = () => {
   ];
 
   // form submit handler
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     const formData = new FormData(e.target as HTMLFormElement);
 
     const email = formData.get("email") as string;
@@ -35,11 +40,48 @@ const Form = () => {
     const confirmPassword = formData.get("confirmPassword") as string;
 
     if (isNewUser && password !== confirmPassword) {
-      alert("Passwords do not match");
+      toast.warn("Passwords do not match", { position: "top-center" });
       return;
     }
 
-    console.log(email, password);
+    // create user or sign in
+    try {
+      if (isNewUser) {
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+        });
+
+        if (error) throw error;
+
+        if (data.user) {
+          toast.info(`${data.user.email} check your email for verification`, {
+            position: "top-center",
+          });
+          setNewUser(false);
+        }
+      } else {
+        // Sign In
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (error) throw error;
+
+        if (data.user) {
+          toast.success(`${data.user.email} signed in successfully!`, {
+            position: "top-center",
+          });
+          // go to home
+          router.push("/home");
+        }
+      }
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message, { position: "top-center" });
+      }
+    }
   };
 
   return (
@@ -81,7 +123,7 @@ const Form = () => {
             isNewUser={isNewUser ? "Sign Up" : "Sign In"}
             icon={""}
             text={""}
-            customClass="py-2 px-4 mt-4 w-full"
+            customClass="py-2 px-4 mt-4 w-full cursor-pointer"
           />
         </fieldset>
       </form>
