@@ -124,6 +124,7 @@ const Form = () => {
             icon={""}
             text={""}
             customClass="py-2 px-4 mt-4 w-full cursor-pointer"
+            onClick={undefined}
           />
         </fieldset>
       </form>

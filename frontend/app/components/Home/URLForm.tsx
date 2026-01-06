@@ -1,3 +1,5 @@
+"use client";
+
 import Button from "@/app/ui/Button";
 import Input from "@/app/ui/Input";
 import { AiTwotoneThunderbolt } from "react-icons/ai";
@@ -19,6 +21,7 @@ const URLForm = () => {
           icon={<AiTwotoneThunderbolt className="" />}
           text={<span>Shorten Now</span>}
           customClass="flex items-center gap-2 px-4 py-3"
+          onClick={() => undefined}
         />
       </fieldset>
     </form>

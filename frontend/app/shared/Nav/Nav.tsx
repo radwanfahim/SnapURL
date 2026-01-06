@@ -1,8 +1,28 @@
+"use client";
+
 import Button from "@/app/ui/Button";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { FaSignOutAlt } from "react-icons/fa";
+import { supabase } from "@/app/lib/supabase";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const Nav = () => {
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      console.error("Error signing out:", error.message);
+      return;
+    }
+
+    router.push("/");
+
+    toast.success("Signed out successfully", { position: "top-center" });
+  };
+
   return (
     <nav className="">
       <div className="container mx-auto custom-container">
@@ -23,6 +43,7 @@ const Nav = () => {
                 </a>
               </li>
 
+              <li className="md:block hidden"></li>
               {/* signout */}
               <li>
                 <Button
@@ -30,6 +51,7 @@ const Nav = () => {
                   icon={<FaSignOutAlt />}
                   text="Sign Out"
                   customClass="flex items-center gap-2 px-4 py-2 cursor-pointer"
+                  onClick={handleSignOut}
                 />
               </li>
             </ul>
