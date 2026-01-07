@@ -1,15 +1,21 @@
 import { supabase } from "./supabase";
 
-export const getUser = async () => {
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
+const getUser = async () => {
+  try {
+    const { data: { user } = {}, error } = await supabase.auth.getUser();
 
-  if (error) {
-    console.error("Failed to get user:", error.message);
+    if (error) {
+      console.error("Error fetching user:", error.message);
+      return null;
+    }
+
+    return user;
+  } catch (err) {
+    console.error("Unexpected error in getUser:", err);
     return null;
   }
-
-  return user;
 };
+
+const getUserData = await getUser();
+
+export default getUserData;

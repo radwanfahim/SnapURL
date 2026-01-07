@@ -1,3 +1,5 @@
+"use client";
+
 import { MdOutlineDashboard } from "react-icons/md";
 import { FaLink } from "react-icons/fa";
 
@@ -16,6 +18,7 @@ const Dashboard = () => {
       <div className="mt-10 ">
         {/* Dashboard content goes here */}
         <div className="bg-zinc-50 p-6 rounded-lg shadow-md border-2 border-zinc-200 border-dashed w-full h-80 flex items-center justify-center ">
+          {/* empty state */}
           <div className="text-center ">
             {/* icon */}
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-100 text-zinc-400 mx-auto mb-3">

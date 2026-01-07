@@ -5,12 +5,11 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { supabase } from "@/app/lib/supabase";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
-import { getUser } from "@/app/lib/getUser";
-import { User } from "@supabase/supabase-js";
+import getUserData from "@/app/lib/getUser";
 
 const Nav = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const user = getUserData;
+
   const router = useRouter();
 
   const handleSignOut = async () => {
@@ -26,11 +25,6 @@ const Nav = () => {
     toast.success("Signed out successfully", { position: "top-center" });
   };
 
-  // get user
-  useEffect(() => {
-    getUser().then(setUser);
-  }, []);
-
   return (
     <nav className="">
       <div className="container mx-auto custom-container">
@@ -41,6 +35,7 @@ const Nav = () => {
             <ul className="flex items-center gap-5">
               <li>
                 <span className="text-gray-600 font-semibold">
+                  {/* email  */}
                   {user?.email}
                 </span>
               </li>
