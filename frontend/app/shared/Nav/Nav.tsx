@@ -1,13 +1,16 @@
 "use client";
 
 import Button from "@/app/ui/Button";
-import { LuLayoutDashboard } from "react-icons/lu";
 import { FaSignOutAlt } from "react-icons/fa";
 import { supabase } from "@/app/lib/supabase";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { getUser } from "@/app/lib/getUser";
+import { User } from "@supabase/supabase-js";
 
 const Nav = () => {
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
   const handleSignOut = async () => {
@@ -23,6 +26,11 @@ const Nav = () => {
     toast.success("Signed out successfully", { position: "top-center" });
   };
 
+  // get user
+  useEffect(() => {
+    getUser().then(setUser);
+  }, []);
+
   return (
     <nav className="">
       <div className="container mx-auto custom-container">
@@ -31,19 +39,11 @@ const Nav = () => {
 
           <div>
             <ul className="flex items-center gap-5">
-              {/* dashboard */}
-              <li className="md:block hidden">
-                <a href="" className="flex items-center gap-2">
-                  <span>
-                    <LuLayoutDashboard className="text-gray-600" size={18} />
-                  </span>
-                  <span className="font-bold text-md text-gray-600">
-                    Dashboard
-                  </span>
-                </a>
+              <li>
+                <span className="text-gray-600 font-semibold">
+                  {user?.email}
+                </span>
               </li>
-
-              <li className="md:block hidden"></li>
               {/* signout */}
               <li>
                 <Button
