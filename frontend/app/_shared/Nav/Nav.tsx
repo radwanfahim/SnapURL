@@ -1,11 +1,11 @@
 "use client";
 
-import Button from "@/app/ui/Button";
+import Button from "@/app/components/_ui/Button";
 import { FaSignOutAlt } from "react-icons/fa";
-import { supabase } from "@/app/lib/supabase";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import getUserData from "@/app/lib/getUser";
+import getUserData from "@/app/_lib/getUser";
+import { supabase } from "@/app/_lib/supabase";
 
 const Nav = () => {
   const user = getUserData;

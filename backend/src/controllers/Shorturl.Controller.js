@@ -1,14 +1,27 @@
 import ShortUrlModel from "../models/ShortUrl.Model.js";
+import crypto from "crypto";
 
 // post
 async function postShortUrl(req, res, next) {
   try {
-    const { originalUrl, shortCode, email, clicks } = req.body;
+    const { originalUrl, email } = req.body;
+
+    const generateCode = (length = 6) => {
+      return crypto
+        .randomBytes(length)
+        .toString("base64")
+        .replace(/[^a-zA-Z0-9]/g, "")
+        .slice(0, length);
+    };
+
+    const shortCode = generateCode();
+    const clicks = 0;
+
     const urlData = {
-      original_url: originalUrl,
-      short_code: shortCode,
+      originalUrl: originalUrl,
+      shortCode: shortCode,
+      clicks: clicks,
       email,
-      clicks,
     };
     const newShortUrl = await ShortUrlModel.createShortUrl(urlData);
     res.status(201).json(newShortUrl);
@@ -31,7 +44,9 @@ async function getShortUrlsByEmail(req, res, next) {
   }
 }
 
+
 export default {
   postShortUrl,
   getShortUrlsByEmail,
+
 };

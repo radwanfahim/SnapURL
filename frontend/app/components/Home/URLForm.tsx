@@ -1,7 +1,7 @@
 "use client";
 
-import Button from "@/app/ui/Button";
-import Input from "@/app/ui/Input";
+import Button from "@/app/components/_ui/Button";
+import Input from "@/app/components/_ui/Input";
 import { AiTwotoneThunderbolt } from "react-icons/ai";
 
 const URLForm = () => {

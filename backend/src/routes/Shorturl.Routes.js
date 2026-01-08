@@ -6,7 +6,8 @@ const router = express.Router();
 // create
 router.post("/", shorturlController.postShortUrl);
 
-// get 
+// get
 router.get("/", shorturlController.getShortUrlsByEmail);
+
 
 export default router;

@@ -1,8 +1,8 @@
 "use client";
 
-import { supabase } from "@/app/lib/supabase";
-import Button from "@/app/ui/Button";
-import Input from "@/app/ui/Input";
+import { supabase } from "@/app/_lib/supabase";
+import Button from "@/app/components/_ui/Button";
+import Input from "@/app/components/_ui/Input";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";

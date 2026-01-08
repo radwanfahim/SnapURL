@@ -7,6 +7,7 @@ import rateLimit from "express-rate-limit";
 
 // import routes
 import urlShortenerRoute from "./routes/Shorturl.Routes.js";
+import shortCode from "./routes/ShortCode.Routes.js";
 
 // Initialize Express app
 const app = express();
@@ -23,9 +24,11 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(limiter);
+app.use(express.urlencoded({ extended: false }));
 
 // url shortener route
 app.use("/api/shorten", urlShortenerRoute);
+app.use("/", shortCode);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
