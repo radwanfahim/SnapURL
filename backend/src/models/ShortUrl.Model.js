@@ -20,7 +20,18 @@ async function getShortUrlsByEmail(email) {
   return { data, error };
 }
 
+// delete
+async function deleteShorturlById(id) {
+  const { data, error } = await supabase
+    .from("shorturls")
+    .delete()
+    .eq("id", id);
+
+  return { data, error };
+}
+
 export default {
   createShortUrl,
   getShortUrlsByEmail,
+  deleteShorturlById,
 };

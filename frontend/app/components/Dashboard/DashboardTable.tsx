@@ -5,11 +5,37 @@ interface DashboardData {
   originalUrl: string;
   shortCode: string;
   clicks: number;
+  id: string;
 }
 
+import { deleteurlData } from "@/app/_lib/api/shorturls";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MdDelete } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const DashboardForm = ({ data }: { data: DashboardData[] }) => {
+  const queryClient = useQueryClient();
+
+  const deleteData = useMutation({
+    mutationFn: deleteurlData,
+    onSuccess: () => {
+      toast.success("Deleted", {
+        position: "top-center",
+      });
+      queryClient.invalidateQueries({ queryKey: ["urls"] });
+    },
+  });
+
+  const handleDelete = (id: string) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this short URL? This action cannot be undone."
+    );
+
+    if (!confirmed) return;
+
+    deleteData.mutate(id);
+  };
+
   const tableRow = [
     {
       text: "Created At",
@@ -28,14 +54,14 @@ const DashboardForm = ({ data }: { data: DashboardData[] }) => {
     },
   ];
   return (
-    <table className="w-full">
+    <table className="w-full table-auto  ">
       {/* table head */}
-      <thead>
+      <thead className="sticky top-0 z-10 bg-fuchsia-300">
         <tr>
           {tableRow.map((tr, i) => (
             <th
               key={i}
-              className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase"
+              className="px-6 py-4 text-left text-xs font-semibold text-white uppercase"
             >
               {tr.text}
             </th>
@@ -44,41 +70,49 @@ const DashboardForm = ({ data }: { data: DashboardData[] }) => {
       </thead>
 
       {/* table body */}
-
       <tbody>
-        {data.map((t, i) => (
-          <tr key={i}>
-            <td className="px-6 py-4">
-              {new Date(t.created_at).toLocaleDateString("en-US", {
-                day: "numeric",
-                month: "short",
-                year: "numeric",
-              })}
-            </td>
-            <td className="px-6 py-4 ">
-              <a
-                className="text-fuchsia-500 hover:text-fuchsia-800 underline "
-                target="_blank"
-                href={t.originalUrl}
-              >
-                {t.originalUrl}
-              </a>
-            </td>
-            <td className="px-6 py-4">
-              <a
-                className="bg-fuchsia-200 text-fuchsia-500 px-3 py-1 rounded-md underline "
-                target="_blank"
-                href={`http://localhost:5000/${t.shortCode}`}
-              >
-                {t.shortCode}
-              </a>
-            </td>
-            <td className="px-6 py-4">{t.clicks}</td>
-            <td className="px-6 py-4">
-              <MdDelete className="text-2xl text-red-500 hover:text-red-400 cursor-pointer" />
-            </td>
-          </tr>
-        ))}
+        {data.map((t, i) => {
+          return (
+            <tr key={i}>
+              <td className="px-6 py-4">
+                {new Date(t.created_at).toLocaleDateString("en-US", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                })}
+              </td>
+
+              <td className="px-6 py-4">
+                <a
+                  className="text-fuchsia-500 hover:text-fuchsia-800 underline"
+                  target="_blank"
+                  href={t.originalUrl}
+                >
+                  <p className="truncate w-80">{t.originalUrl}</p>
+                </a>
+              </td>
+
+              <td className="px-6 py-4">
+                <a
+                  className="bg-fuchsia-200 text-fuchsia-500 px-3 py-1 rounded-md underline font-semibold"
+                  target="_blank"
+                  href={`http://localhost:5000/${t.shortCode}`}
+                >
+                  {t.shortCode}
+                </a>
+              </td>
+
+              <td className="px-6 py-4">{t.clicks}</td>
+
+              <td className="px-6 py-4">
+                <MdDelete
+                  onClick={() => handleDelete(t.id)}
+                  className="text-2xl text-red-500 hover:text-red-400 cursor-pointer"
+                />
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );

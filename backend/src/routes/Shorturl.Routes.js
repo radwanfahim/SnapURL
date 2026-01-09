@@ -9,5 +9,7 @@ router.post("/", shorturlController.postShortUrl);
 // get
 router.get("/", shorturlController.getShortUrlsByEmail);
 
+// delete
+router.delete("/:id", shorturlController.deleteShortUrlById);
 
 export default router;

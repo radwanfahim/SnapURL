@@ -30,16 +30,16 @@ const Dashboard = () => {
       <div className="mt-10 ">
         {/* Dashboard content goes here */}
         <div
-          className={`bg-zinc-50  rounded-lg shadow-md border-2 border-zinc-200 border-dashed w-full h-80  ${
-            data?.length > 0 ? "p-3" : "flex items-center justify-center p-6"
+          className={`bg-zinc-50  rounded-lg shadow-md border-2 border-zinc-200 border-dashed w-full h-100  ${
+            data?.length > 0 ? "p-1" : "flex items-center justify-center p-6"
           }`}
         >
           {/* empty state */}
           {data?.length === 0 && (
-            <div className="text-center ">
+            <div className="text-center w-full">
               {/* icon */}
               <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-100 text-zinc-400 mx-auto mb-3">
-                <FaLink className=" h-8  w-8" />
+                <FaLink className=" h-8 w-8" />
               </div>
 
               <div>
@@ -52,7 +52,12 @@ const Dashboard = () => {
           )}
 
           {/* when url added */}
-          {data?.length > 0 && <DashboardForm data={data} />}
+
+          {data?.length > 0 && (
+            <div className="w-full overflow-x-auto overflow-y-auto max-h-90">
+              <DashboardForm data={data} />
+            </div>
+          )}
         </div>
       </div>
     </div>
