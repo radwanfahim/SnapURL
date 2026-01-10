@@ -37,12 +37,12 @@ http://localhost:5000/api/shorten/:id
 For shortcode get request with click count logic
 http://localhost:5000/KzN9E8
 
-# test auth
-email: user@mail.com
-password: 123456
-
 # Design Decisions
-Design decition mostly made by searching on google and cheaking in youtube videos for similar projects. Also other same service provider uses the similar design for their project.
+Design decition mostly made by searching on google and cheaking in youtube videos for similar projects. Also other service providers use a similar design for their projects.
 
 # Known Limitations
 Creating shortcode was challenging however I overcome that challenge by checking Supabase documantation and createing the logic for click count.
+
+# Test auth
+email: user@mail.com
+password: 123456
