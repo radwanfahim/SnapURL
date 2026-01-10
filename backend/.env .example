@@ -1,0 +1,2 @@
+SUPABASE_URL="Your Supabase URL Here"
+SUPABASE_KEY = "Supabase Secret Key"
