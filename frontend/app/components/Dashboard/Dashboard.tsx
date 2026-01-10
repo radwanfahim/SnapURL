@@ -4,11 +4,14 @@ import { MdOutlineDashboard } from "react-icons/md";
 import { FaLink } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import { getUrlData } from "@/app/_lib/api/shorturls";
-import getUserData from "@/app/_lib/getUser";
+import { getUser } from "@/app/_lib/getUser";
 import DashboardForm from "./DashboardTable";
 
 const Dashboard = () => {
-  const user = getUserData;
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: getUser,
+  });
 
   const { data } = useQuery({
     queryKey: ["urls", user?.email],

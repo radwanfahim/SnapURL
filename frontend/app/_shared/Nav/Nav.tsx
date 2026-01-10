@@ -4,11 +4,15 @@ import Button from "@/app/components/_ui/Button";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import getUserData from "@/app/_lib/getUser";
 import { supabase } from "@/app/_lib/supabase";
+import { getUser } from "@/app/_lib/getUser";
+import { useQuery } from "@tanstack/react-query";
 
 const Nav = () => {
-  const user = getUserData;
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: getUser,
+  });
 
   const router = useRouter();
 

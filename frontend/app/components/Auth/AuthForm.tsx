@@ -69,12 +69,14 @@ const Form = () => {
 
         if (error) throw error;
 
-        if (data.user) {
+        if (data.session) {
+          console.log("Session created:", data.session);
           toast.success(`${data.user.email} signed in successfully!`, {
             position: "top-center",
           });
           // go to home
           router.push("/home");
+          router.refresh();
         }
       }
     } catch (error: Error | unknown) {

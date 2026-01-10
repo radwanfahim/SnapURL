@@ -1,15 +1,21 @@
 "use client";
 
 import { postUrlData } from "@/app/_lib/api/shorturls";
-import getUserData from "@/app/_lib/getUser";
+import { getUser } from "@/app/_lib/getUser";
 import Button from "@/app/components/_ui/Button";
 import Input from "@/app/components/_ui/Input";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AiTwotoneThunderbolt } from "react-icons/ai";
 import { toast } from "react-toastify";
 
 const URLForm = () => {
-  const email = getUserData?.email;
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: getUser,
+  });
+
+  const email = user?.email;
+
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -25,9 +31,10 @@ const URLForm = () => {
       );
     },
     onError: (error: Error) => {
-      const userLimit = error.message.includes("403");
+      console.log(error);
 
-      console.log(userLimit);
+      const userLimit = error.message.includes("403");
+      const exist = error.message.includes("409");
 
       if (userLimit === true) {
         toast.error(
@@ -36,6 +43,11 @@ const URLForm = () => {
             position: "top-center",
           }
         );
+      }
+      if (exist === true) {
+        toast.error("URL already exist", {
+          position: "top-center",
+        });
       }
     },
   });
