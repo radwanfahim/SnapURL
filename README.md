@@ -1,7 +1,7 @@
 
 # Installation frontend
 
-Install project frontend with npm
+Install the project frontend with npm
 
 ```bash
   cd project
@@ -9,7 +9,7 @@ Install project frontend with npm
   npm run dev
 ```
 
-frontend localhost should be 3000
+Frontend localhost should be 3000
     
 # Installation backend
 
@@ -31,11 +31,15 @@ http://localhost:5000/api/shorten?email=email
 For post request
 http://localhost:5000/api/shorten
 
-For delete request
+For the delete request
 http://localhost:5000/api/shorten/:id
 
 For shortcode get request with click count logic
 http://localhost:5000/KzN9E8
+
+# test auth
+email: user@mail.com
+password: 123456
 
 # Design Decisions
 Design decition mostly made by searching on google and cheaking in youtube videos for similar projects. Also other same service provider uses the similar design for their project.
