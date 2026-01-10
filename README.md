@@ -1,3 +1,9 @@
+# Installation git
+
+Type the following on cmd
+```bash
+  git clone https://github.com/radwanfahim/SnapURL.git
+```
 
 # Installation frontend
 
