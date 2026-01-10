@@ -47,4 +47,4 @@ http://localhost:5000/KzN9E8
 Design decisions are mostly made by searching on google and checking youtube videos for similar projects. Also other service providers use a similar design for their projects.
 
 # Known Limitations
-Creating shortcode was challenging however I overcome that challenge by checking Supabase documantation and createing the logic for click count.
+Creating shortcode GET request with click and count logic was challenging however I overcome that challenge by checking Supabase documantation and createing the logic for click count.
