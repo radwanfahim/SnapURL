@@ -12,6 +12,7 @@ import { deleteurlData } from "@/app/_lib/api/shorturls";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
+import { MdCopyAll } from "react-icons/md";
 
 const DashboardForm = ({ data }: { data: DashboardData[] }) => {
   const queryClient = useQueryClient();
@@ -92,7 +93,7 @@ const DashboardForm = ({ data }: { data: DashboardData[] }) => {
                 </a>
               </td>
 
-              <td className="px-6 py-4">
+              <td className="px-6 py-4 flex items-center gap-3 ">
                 <a
                   className="bg-fuchsia-200 text-fuchsia-500 px-3 py-1 rounded-md underline font-semibold"
                   target="_blank"
@@ -100,6 +101,17 @@ const DashboardForm = ({ data }: { data: DashboardData[] }) => {
                 >
                   {t.shortCode}
                 </a>
+                <MdCopyAll
+                  className="cursor-pointer hover:text-fuchsia-400 text-xl"
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      `http://localhost:5000/${t.shortCode}`
+                    );
+                    toast.info(`${t.shortCode} copied to clipboard`, {
+                      position: "top-center",
+                    });
+                  }}
+                />
               </td>
 
               <td className="px-6 py-4">{t.clicks}</td>

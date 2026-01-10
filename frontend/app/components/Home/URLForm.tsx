@@ -25,9 +25,18 @@ const URLForm = () => {
       );
     },
     onError: (error: Error) => {
-      toast.error(`${error.message}`, {
-        position: "top-center",
-      });
+      const userLimit = error.message.includes("403");
+
+      console.log(userLimit);
+
+      if (userLimit === true) {
+        toast.error(
+          "You have reached the maximum URL limit. Please upgrade to continue.",
+          {
+            position: "top-center",
+          }
+        );
+      }
     },
   });
 
